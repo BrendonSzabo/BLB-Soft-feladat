@@ -13,5 +13,9 @@ namespace Models
 
         public virtual User User { get; set; }
         public virtual Task Task { get; set; }
+        public UserTask()
+        {
+                
+        }
     }
 }

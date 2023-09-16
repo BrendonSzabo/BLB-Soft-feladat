@@ -20,5 +20,9 @@ namespace Models
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }
+        public Task()
+        {
+                
+        }
     }
 }

@@ -9,6 +9,7 @@ using Repository;
 using Repository.DbRepository;
 using Repository.ModelRepository;
 using System.IO;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Endpoint
 {
@@ -48,7 +49,9 @@ namespace Endpoint
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", ".Endpoint v1"));
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Endpoint v1");
+                });
             }
             app.UseExceptionHandler(t => t.Run(async context =>
             {
@@ -60,11 +63,13 @@ namespace Endpoint
             }
             ));
 
+
+
             app.UseCors(x => x
                 .AllowCredentials()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .WithOrigins("http://localhost:53458"));
+                .WithOrigins("http://localhost:5213"));
 
             app.UseRouting();
 
