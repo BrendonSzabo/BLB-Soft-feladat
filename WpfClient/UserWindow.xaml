@@ -6,9 +6,30 @@
         xmlns:local="clr-namespace:WpfClient"
         xmlns:v="clr-namespace:WpfClient.ViewModels"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="800">
+        Title="UserWindow" Height="450" Width="800" Name="MainWindow" Closing="WindowWindow_Closing">
+    <Window.Resources>
+        <DataTemplate x:Key="DefaultTaskTemplate">
+            <Grid x:Name="GridTaskItem" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderThickness="2,0,0,0" BorderBrush="Black" Grid.Column="1"/>
+                <Border BorderThickness="2,0,0,0" BorderBrush="Black" Grid.Column="2"/>
+                <Border BorderThickness="2,0,0,0" BorderBrush="Black" Grid.Column="3"/>
+                <TextBlock x:Name="Id" Grid.Column="0" Text="{Binding Id}" Margin="5,1,0,0" IsEnabled="False" Padding="0,0,5,0" Foreground="White"/>
+                <TextBlock x:Name="Titleblock" Grid.Column="1" Text="{Binding Title}" Tag="{Binding Title}" IsEnabled="False" Padding="5,0,5,0" Foreground="White"/>
+                <TextBlock x:Name="Date" Grid.Column="2" Text="{Binding Date}" IsEnabled="False" Padding="5,0,5,0" Foreground="White"/>
+                <Button x:Name="Description" Grid.Column="3" Content="Desc" Tag="{Binding Description}" Padding="0,0,2,0" Margin="5,0,5,0" Click="Description_Click"/>
+                <Button Name="taskitembutton" Grid.Column="4" Padding="0,0,2,0" Margin="5,0,5,0" Content="Edit" Click="taskitembutton_Click" Tag="{Binding Id}"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Window.DataContext>
-        <v:UserViewModel />
+        <v:UnifiedViewModel />
     </Window.DataContext>
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -28,7 +49,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png" Grid.Column="1"/>
-                <Label Content="Username" Name="username" VerticalContentAlignment="Center" FontSize="26" FontFamily="Times New Roman"/>
+                <Label Content="" Name="username" VerticalContentAlignment="Center" FontSize="26" FontFamily="Times New Roman"/>
             </Grid>
         </Border>
         <Grid Grid.Row="1" Name="TaskGrid" Background="Transparent">
@@ -36,27 +57,70 @@
                 <ColumnDefinition Width="4*" Name="TaskSlot"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Background="Transparent" ItemTemplate="{StaticResource DefaultTaskTemplate}">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
-            <Grid Grid.Column="2" Name="ButtonGrid" Background="Transparent">
+            <Grid Grid.Column="0" Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <ListBox Grid.Row="0" Background="Transparent" ItemTemplate="{StaticResource DefaultTaskTemplate}" SelectedItem="{Binding SelectedTask}" Name="TaskList">
+                </ListBox>
+                <Grid Grid.Row="1" Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding SelectedTask.Title}" VerticalContentAlignment="Center" Margin="5,5,5,5"/>
+                    <TextBox Grid.Column="1" Text="{Binding SelectedTask.Date}" VerticalContentAlignment="Center" Margin="5,5,5,5"/>
+                </Grid>
+                
+            </Grid>
+            <Grid Grid.Column="1" Name="ButtonGrid" Background="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.3*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Task controls" VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
-                <Button Grid.Row="1" Margin="5" Content="Add"/>
-                <Button Grid.Row="2" Margin="5" Content="Remove"/>
-                <Button Grid.Row="3" Margin="5" Content="Update"/>
-                <Button Grid.Row="34" Margin="5" Content="Home"/>
+                <Button Grid.Row="1" Margin="5" Content="Add" Name="addbutton" Click="addbutton_Click"/>
+                <Button Grid.Row="2" Margin="5" Content="Remove" Name="removebutton" Click="removebutton_Click"/>
+                <Button Grid.Row="3" Margin="5" Content="Export" Name="exportbutton" Click="exportbutton_Click"/>
             </Grid>
+        </Grid>
+        <Grid Visibility="Hidden" Name="popup" Width="300" Height="200">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Content="" Name="popuptext" Grid.Row="0" BorderThickness="0,0,0,2" BorderBrush="Black"/>
+            <Button Name="popupclose" Click="popupclose_Click" Grid.Row="1" Content="Close" Margin="50,5,50,5"/>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#FFD3A5" Offset="0.0"/>
+                    <GradientStop Color="#FD6585" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+        <Grid Visibility="Hidden" Name="taskselector" Width="300" Height="80">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ListBox Grid.Row="0" Background="Transparent" ItemTemplate="{StaticResource DefaultTaskTemplate}" SelectedItem="{Binding SelectedTask}" Name="selecttask" ItemsSource="{Binding Tasks}"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Add" Click="Addtask_Click"  Name="Addtask" Grid.Column="0" Margin="5,5,5,5"/>
+                <Button Content="Cancel" Name="Closetask" Click="Closetask_Click" Grid.Column="1" Margin="5,5,5,5"/>
+            </Grid>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#FFD3A5" Offset="0.0"/>
+                    <GradientStop Color="#FD6585" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
         </Grid>
     </Grid>
 </Window>

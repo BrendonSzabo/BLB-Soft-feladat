@@ -11,7 +11,7 @@ using Microsoft.Toolkit.Mvvm.Input;
 
 namespace WpfClient.ViewModels
 {
-    class TaskViewModel : ObservableRecipient
+    public class TaskViewModel : ObservableRecipient
     {
         public RestCollection<Models.Task> Tasks { get; set; }
 
@@ -51,7 +51,7 @@ namespace WpfClient.ViewModels
         {
             if (!IsInDesignMode)
             {
-                Tasks = new RestCollection<Models.Task>("http://localhost:59674/", "Task", "hub");
+                Tasks = new RestCollection<Models.Task>("http://localhost:5213/", "Task", "hub");
 
                 CreateTaskCommand = new RelayCommand(() =>
                 {
