@@ -10,6 +10,7 @@ using Repository.DbRepository;
 using Repository.ModelRepository;
 using System.IO;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Reflection;
 
 namespace Endpoint
 {
@@ -39,7 +40,12 @@ namespace Endpoint
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Endpoint", Version = "v1" });
+                // Specify the XML comments file path
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

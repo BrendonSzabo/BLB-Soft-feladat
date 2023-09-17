@@ -13,5 +13,6 @@ namespace Logic.Interface
         void DeleteTask(int id);
         void UpdateTask(Models.Task item);
         Models.Task ReadTask(int id);
+
     }
 }

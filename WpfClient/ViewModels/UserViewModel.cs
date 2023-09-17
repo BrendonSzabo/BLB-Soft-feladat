@@ -17,9 +17,6 @@ namespace WpfClient.ViewModels
         public RestCollection<User> Users { get; set; }
 
         private User selectedUser;
-        public ICommand CreateUserCommand { get; set; }
-        public ICommand DeleteUserCommand { get; set; }
-        public ICommand UpdateUserCommand { get; set; }
 
         public User SelectedUser
         {
@@ -39,7 +36,10 @@ namespace WpfClient.ViewModels
             }
         }
 
-        //For some reason i cant do it without this
+        public ICommand CreateUserCommand { get; set; }
+        public ICommand DeleteUserCommand { get; set; }
+        public ICommand UpdateUserCommand { get; set; }
+
         public static bool IsInDesignMode
         {
             get
@@ -53,7 +53,7 @@ namespace WpfClient.ViewModels
         {
             if (!IsInDesignMode)
             {
-                Users = new RestCollection<User>("http://localhost:12023/", "User", "hub");
+                Users = new RestCollection<User>("http://localhost:59674/", "User", "hub");
 
                 CreateUserCommand = new RelayCommand(() =>
                 {

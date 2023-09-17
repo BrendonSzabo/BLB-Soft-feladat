@@ -38,7 +38,6 @@ namespace WpfClient.ViewModels
             }
         }
 
-        //For some reason i cant do it without this
         public static bool IsInDesignMode
         {
             get
@@ -52,7 +51,7 @@ namespace WpfClient.ViewModels
         {
             if (!IsInDesignMode)
             {
-                Tasks = new RestCollection<Models.Task>("http://localhost:12023/", "Task", "hub");
+                Tasks = new RestCollection<Models.Task>("http://localhost:59674/", "Task", "hub");
 
                 CreateTaskCommand = new RelayCommand(() =>
                 {

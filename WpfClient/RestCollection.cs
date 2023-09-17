@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using Models;
 
 namespace WpfClient
 {
@@ -59,7 +60,7 @@ namespace WpfClient
 
         }
 
-        public async Task<List<T>> GetAsync<T>(string endpoint)
+        public async System.Threading.Tasks.Task<List<T>> GetAsync<T>(string endpoint)
         {
             List<T> items = new List<T>();
             HttpResponseMessage response = await client.GetAsync(endpoint);
@@ -91,7 +92,7 @@ namespace WpfClient
             return items;
         }
 
-        public async Task<T> GetSingleAsync<T>(string endpoint)
+        public async System.Threading.Tasks.Task<T> GetSingleAsync<T>(string endpoint)
         {
             T item = default(T);
             HttpResponseMessage response = await client.GetAsync(endpoint);
@@ -123,7 +124,7 @@ namespace WpfClient
             return item;
         }
 
-        public async Task<T> GetAsync<T>(int id, string endpoint)
+        public async System.Threading.Tasks.Task<T> GetAsync<T>(int id, string endpoint)
         {
             T item = default(T);
             HttpResponseMessage response = await client.GetAsync(endpoint + "/" + id.ToString());
@@ -155,7 +156,7 @@ namespace WpfClient
             return item;
         }
 
-        public async Task PostAsync<T>(T item, string endpoint)
+        public async System.Threading.Tasks.Task PostAsync<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
                 await client.PostAsJsonAsync(endpoint, item);
@@ -181,7 +182,7 @@ namespace WpfClient
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task DeleteAsync(int id, string endpoint)
+        public async System.Threading.Tasks.Task DeleteAsync(int id, string endpoint)
         {
             HttpResponseMessage response =
                 await client.DeleteAsync(endpoint + "/" + id.ToString());
@@ -209,7 +210,7 @@ namespace WpfClient
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task PutAsync<T>(T item, string endpoint)
+        public async System.Threading.Tasks.Task PutAsync<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
                 await client.PutAsJsonAsync(endpoint, item);
@@ -258,7 +259,7 @@ namespace WpfClient
 
             conn.Closed += async (error) =>
             {
-                await Task.Delay(new Random().Next(0, 5) * 1000);
+                await System.Threading.Tasks.Task.Delay(new Random().Next(0, 5) * 1000);
                 await conn.StartAsync();
             };
         }
@@ -321,7 +322,7 @@ namespace WpfClient
             Init();
         }
 
-        private async Task Init()
+        private async System.Threading.Tasks.Task Init()
         {
             items = await rest.GetAsync<T>(typeof(T).Name);
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));

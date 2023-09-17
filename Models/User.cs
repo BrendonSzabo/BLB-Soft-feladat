@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 namespace Models
 {
@@ -12,14 +12,22 @@ namespace Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id;
-        public string Username;
+        public int Id { get; set; }
+        public string Username { get; set; }
         [NotMapped]
         [JsonIgnore]
         public virtual ICollection<Task> Tasks { get; set; }
         public User()
         {
-                
+
+            Tasks = new List<Task>();
+        }
+
+        public User(int id, string username)
+        {
+            Id = id;
+            Username = username;
+            Tasks = new List<Task>();
         }
     }
 }

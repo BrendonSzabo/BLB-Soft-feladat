@@ -81,9 +81,6 @@ public class Program
     static void Main(string[] args)
     {
         DatabaseContext db = new();
-        db.Add(new User() { Username = "Johnson" });
-        db.Add(new Models.Task() { Title = "New task" });
-        db.SaveChanges();
         var u = db.Users.ToList();
         var t = db.Tasks.ToList();
         foreach (var item in u)

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Repository
@@ -58,6 +59,18 @@ namespace Repository
                         j.HasKey(ut => new { ut.UserId, ut.TaskId });
                         j.ToTable("UserTask");
                     });
+
+            modelBuilder.Entity<User>().HasData(new User[]
+                {
+                    new User(1,"Jani"),
+                    new User(2,"Dezso"),
+                });
+
+            modelBuilder.Entity<Models.Task>().HasData(new Models.Task[]
+                {
+                    new Models.Task(1,"New task 1"),
+                    new Models.Task(2,"New task 2"),
+                });
 
             base.OnModelCreating(modelBuilder);
         }

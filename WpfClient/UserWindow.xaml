@@ -1,0 +1,62 @@
+﻿<Window x:Class="WpfClient.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfClient"
+        xmlns:v="clr-namespace:WpfClient.ViewModels"
+        mc:Ignorable="d"
+        Title="UserWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <v:UserViewModel />
+    </Window.DataContext>
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#671e75" Offset="0.0"/>
+            <GradientStop Color="#fc601d" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Name="MainGrid" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="0 0 0 2">
+            <Grid Grid.Row="0" Name="TitleGrid" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png" Grid.Column="1"/>
+                <Label Content="Username" Name="username" VerticalContentAlignment="Center" FontSize="26" FontFamily="Times New Roman"/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1" Name="TaskGrid" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" Name="TaskSlot"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox Background="Transparent" ItemTemplate="{StaticResource DefaultTaskTemplate}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <Grid Grid.Column="2" Name="ButtonGrid" Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Task controls" VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
+                <Button Grid.Row="1" Margin="5" Content="Add"/>
+                <Button Grid.Row="2" Margin="5" Content="Remove"/>
+                <Button Grid.Row="3" Margin="5" Content="Update"/>
+                <Button Grid.Row="34" Margin="5" Content="Home"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
