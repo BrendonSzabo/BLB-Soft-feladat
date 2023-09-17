@@ -68,8 +68,8 @@ namespace Repository
 
             modelBuilder.Entity<Models.Task>().HasData(new Models.Task[]
                 {
-                    new Models.Task(1,"New task 1"),
-                    new Models.Task(2,"New task 2"),
+                    new Models.Task(1,"New task 1"){Date = "30"},
+                    new Models.Task(2,"New task 2"){Date = "20"},
                 });
 
             base.OnModelCreating(modelBuilder);

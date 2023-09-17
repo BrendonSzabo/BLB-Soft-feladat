@@ -21,8 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B09C9C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfClient", "WpfClient\WpfClient.csproj", "{F7C10DD4-AC55-44D0-A171-92D829B50DC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientConsole", "ClientConsole\ClientConsole.csproj", "{07BA45CB-24DF-4423-8634-935E36EC830E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{F7C10DD4-AC55-44D0-A171-92D829B50DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C10DD4-AC55-44D0-A171-92D829B50DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7C10DD4-AC55-44D0-A171-92D829B50DC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{07BA45CB-24DF-4423-8634-935E36EC830E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{07BA45CB-24DF-4423-8634-935E36EC830E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{07BA45CB-24DF-4423-8634-935E36EC830E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{07BA45CB-24DF-4423-8634-935E36EC830E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,7 +62,6 @@ Global
 		{4549F584-AFE9-4473-B219-14367D6A69C7} = {B0FB60FC-A183-4A0A-B7EB-69C919EEA752}
 		{67060AA1-BA5E-4861-AEFF-E199A2B259D3} = {B0FB60FC-A183-4A0A-B7EB-69C919EEA752}
 		{F7C10DD4-AC55-44D0-A171-92D829B50DC3} = {75344F76-3588-479A-991B-A700F6FAED78}
-		{07BA45CB-24DF-4423-8634-935E36EC830E} = {75344F76-3588-479A-991B-A700F6FAED78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {608CE031-76B6-45B0-B99D-F615D39C34CD}

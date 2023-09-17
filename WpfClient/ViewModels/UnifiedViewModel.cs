@@ -12,12 +12,27 @@ using Models;
 
 namespace WpfClient.ViewModels
 {
+    /// <summary>
+    /// Unified view model for Users and Tasks
+    /// </summary>
     public class UnifiedViewModel : ObservableRecipient
     {
+        /// <summary>
+        /// All Users from the database 
+        /// </summary>
         public RestCollection<User> Users { get; set; }
         private User selectedUser;
+        /// <summary>
+        /// Calls the create command through a post request for the selected user
+        /// </summary>
         public ICommand CreateUserCommand { get; set; }
+        /// <summary>
+        /// Calls a delete command for the selected user
+        /// </summary>
         public ICommand DeleteUserCommand { get; set; }
+        /// <summary>
+        /// Calls the update command through a put request for the selected user
+        /// </summary>
         public ICommand UpdateUserCommand { get; set; }
         public User SelectedUser
         {
@@ -37,12 +52,26 @@ namespace WpfClient.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// All tasks from the database 
+        /// </summary>
         public RestCollection<Models.Task> Tasks { get; set; }
         private Models.Task selectedTask;
+        /// <summary>
+        /// Calls the create command through a post request for the selected task
+        /// </summary>
         public ICommand CreateTaskCommand { get; set; }
+        /// <summary>
+        /// Calls a delete command for the selected task
+        /// </summary>
         public ICommand DeleteTaskCommand { get; set; }
+        /// <summary>
+        /// Calls the update command through a put request for the selected task
+        /// </summary>
         public ICommand UpdateTaskCommand { get; set; }
+        /// <summary>
+        /// Currently selected task
+        /// </summary>
         public Models.Task SelectedTask
         {
             get { return selectedTask; }

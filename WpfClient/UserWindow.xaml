@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="UserWindow" Height="450" Width="800" Name="MainWindow" Closing="WindowWindow_Closing">
     <Window.Resources>
+        <!-- Task template, id-title-date-description button -->
         <DataTemplate x:Key="DefaultTaskTemplate">
             <Grid x:Name="GridTaskItem" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -37,44 +38,54 @@
             <GradientStop Color="#fc601d" Offset="1.0"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid Name="MainGrid" Background="Transparent">
+    <Grid Name="MainGrid" Background="Transparent" Panel.ZIndex="1">
+        <!-- Cutting up the main grid into 2 parts, the "title" part with the username and the content part -->
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="0 0 0 2">
-            <Grid Grid.Row="0" Name="TitleGrid" Background="Transparent">
+            <Grid Grid.Row="0" Name="TitleGrid" Background="Transparent" Panel.ZIndex="1">
+                <!-- Cutting the content part into two other part one for the tasks list and textbox the other for the task action buttons buttons -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                <!-- Cat -->
                 <Image Source="https://png.pngtree.com/png-clipart/20230511/ourmid/pngtree-isolated-cat-on-white-background-png-image_7094927.png" Grid.Column="1"/>
                 <Label Content="" Name="username" VerticalContentAlignment="Center" FontSize="26" FontFamily="Times New Roman"/>
             </Grid>
         </Border>
-        <Grid Grid.Row="1" Name="TaskGrid" Background="Transparent">
+        <Grid Grid.Row="1" Name="TaskGrid" Background="Transparent" Panel.ZIndex="1">
+            <!-- buttons and tasks separation -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" Name="TaskSlot"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Background="Transparent">
+            <Grid Grid.Column="0" Background="Transparent" Panel.ZIndex="1">
+                <!-- tasks and textboxes separation -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="6*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
+                <!-- tasks load here from database -->
                 <ListBox Grid.Row="0" Background="Transparent" ItemTemplate="{StaticResource DefaultTaskTemplate}" SelectedItem="{Binding SelectedTask}" Name="TaskList">
                 </ListBox>
-                <Grid Grid.Row="1" Background="Transparent">
+                <Grid Grid.Row="1" Background="Transparent" Panel.ZIndex="1">
+                    <!-- splitting for 2 text boxes title - date -->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
+                    <!-- title -->
                     <TextBox Grid.Column="0" Text="{Binding SelectedTask.Title}" VerticalContentAlignment="Center" Margin="5,5,5,5"/>
+                    <!-- date -->
                     <TextBox Grid.Column="1" Text="{Binding SelectedTask.Date}" VerticalContentAlignment="Center" Margin="5,5,5,5"/>
                 </Grid>
                 
             </Grid>
-            <Grid Grid.Column="1" Name="ButtonGrid" Background="Transparent">
+            <Grid Grid.Column="1" Name="ButtonGrid" Background="Transparent" Panel.ZIndex="1">
+                <!-- three buttons and a title -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.3*"/>
                     <RowDefinition Height="1*"/>
@@ -82,12 +93,17 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Task controls" VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
+                <!-- Add a task from the database -->
                 <Button Grid.Row="1" Margin="5" Content="Add" Name="addbutton" Click="addbutton_Click"/>
+                <!-- Remove a task from the user -->
                 <Button Grid.Row="2" Margin="5" Content="Remove" Name="removebutton" Click="removebutton_Click"/>
+                <!-- Export to xlsx -->
                 <Button Grid.Row="3" Margin="5" Content="Export" Name="exportbutton" Click="exportbutton_Click"/>
             </Grid>
         </Grid>
-        <Grid Visibility="Hidden" Name="popup" Width="300" Height="200">
+        <!--  -->
+        <!-- Description popup -->
+        <Grid Visibility="Hidden" Name="popup" Width="300" Height="200" Panel.ZIndex="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="1*"/>
@@ -101,7 +117,8 @@
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
-        <Grid Visibility="Hidden" Name="taskselector" Width="300" Height="80">
+        <!-- Task adder popup -->
+        <Grid Visibility="Hidden" Name="taskselector" Width="300" Height="80" Panel.ZIndex="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="1*"/>

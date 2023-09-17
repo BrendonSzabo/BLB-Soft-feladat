@@ -14,12 +14,19 @@ namespace Repository.ModelRepository
         public TaskRepository(DatabaseContext ctx) : base(ctx)
         {
         }
-
+        /// <summary>
+        /// Returns the first result with the id or null
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public override Models.Task Read(int id)
         {
             return ctx.Tasks.FirstOrDefault(t => t.Id == id);
         }
-
+        /// <summary>
+        /// Updates the old item to the new item by id
+        /// </summary>
+        /// <param name="item"></param>
         public override void Update(Models.Task item)
         {
             var old = Read(item.Id);

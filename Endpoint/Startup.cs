@@ -23,7 +23,7 @@ namespace Endpoint
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<DatabaseContext>();
@@ -34,7 +34,7 @@ namespace Endpoint
             services.AddTransient<IUser, UserLogic>();
             services.AddTransient<ITask, TaskLogic>();
 
-            services.AddSignalR();
+            services.AddSignalR();///SignalR for data changes
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,7 +48,7 @@ namespace Endpoint
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -69,8 +69,6 @@ namespace Endpoint
             }
             ));
 
-
-
             app.UseCors(x => x
                 .AllowCredentials()
                 .AllowAnyMethod()
@@ -80,7 +78,7 @@ namespace Endpoint
             app.UseRouting();
 
             app.UseAuthorization();
-
+            ///Contorllers and SignalR mapping
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

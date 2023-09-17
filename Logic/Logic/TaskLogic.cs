@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Logic.Logic
 {
+    /// <summary>
+    /// CRUD logic for Tasks
+    /// </summary>
     public class TaskLogic : ITask
     {
 
@@ -37,7 +40,7 @@ namespace Logic.Logic
         public Models.Task ReadTask(int id)
         {
             if (Repo == null) { throw new Exception("No Tasks available."); }
-            var task = Repo.Read(id);
+            var task = Repo.ReadAll().FirstOrDefault(x => x.Id == id);
             if (task == null) { throw new Exception("Task not found."); }
             return task;
         }

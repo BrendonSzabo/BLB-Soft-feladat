@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Logic.Logic
 {
+    /// <summary>
+    /// CRUD logic for Users
+    /// </summary>
     public class UserLogic : IUser
     {
         IRepository<User> Repo;
@@ -37,7 +40,7 @@ namespace Logic.Logic
         public User ReadUser(int id)
         {
             if (Repo == null) { throw new Exception("No Users available."); }
-            var user = Repo.Read(id);
+            var user = Repo.ReadAll().FirstOrDefault(x => x.Id == id);
             if (user == null) { throw new Exception("User not found."); }
             return user;
         }

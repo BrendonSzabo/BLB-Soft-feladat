@@ -13,12 +13,16 @@ using Models;
 
 namespace WpfClient
 {
+    /// <summary>
+    /// Rest api connection service
+    /// </summary>
     public class RestService
     {
         HttpClient client;
 
         public RestService(string baseurl, string pingableEndpoint = "swagger")
         {
+            ///checks the api connection careful for infinite loop
             bool isOk = false;
             do
             {
@@ -40,7 +44,11 @@ namespace WpfClient
                 return false;
             }
         }
-
+        /// <summary>
+        /// Initialize connection with the given url
+        /// </summary>
+        /// <param name="baseurl"></param>
+        /// <exception cref="ArgumentException"></exception>
         private void Init(string baseurl)
         {
             client = new HttpClient();
@@ -59,7 +67,13 @@ namespace WpfClient
             }
 
         }
-
+        /// <summary>
+        /// Async get request, returns a list if objects
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async System.Threading.Tasks.Task<List<T>> GetAsync<T>(string endpoint)
         {
             List<T> items = new List<T>();
@@ -75,7 +89,13 @@ namespace WpfClient
             }
             return items;
         }
-
+        /// <summary>
+        /// Returns a list of object, Sync get request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public List<T> Get<T>(string endpoint)
         {
             List<T> items = new List<T>();
@@ -91,7 +111,13 @@ namespace WpfClient
             }
             return items;
         }
-
+        /// <summary>
+        /// Async get request for single object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async System.Threading.Tasks.Task<T> GetSingleAsync<T>(string endpoint)
         {
             T item = default(T);
@@ -107,7 +133,13 @@ namespace WpfClient
             }
             return item;
         }
-
+        /// <summary>
+        /// Sync get request for single item
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public T GetSingle<T>(string endpoint)
         {
             T item = default(T);
@@ -123,7 +155,14 @@ namespace WpfClient
             }
             return item;
         }
-
+        /// <summary>
+        /// Async get request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async System.Threading.Tasks.Task<T> GetAsync<T>(int id, string endpoint)
         {
             T item = default(T);
@@ -139,7 +178,14 @@ namespace WpfClient
             }
             return item;
         }
-
+        /// <summary>
+        /// Sync get request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public T Get<T>(int id, string endpoint)
         {
             T item = default(T);
@@ -155,7 +201,14 @@ namespace WpfClient
             }
             return item;
         }
-
+        /// <summary>
+        /// Async post request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async System.Threading.Tasks.Task PostAsync<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
@@ -168,7 +221,13 @@ namespace WpfClient
             }
             response.EnsureSuccessStatusCode();
         }
-
+        /// <summary>
+        /// Sync post request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="endpoint"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void Post<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
@@ -181,7 +240,13 @@ namespace WpfClient
             }
             response.EnsureSuccessStatusCode();
         }
-
+        /// <summary>
+        /// Async delete request
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async System.Threading.Tasks.Task DeleteAsync(int id, string endpoint)
         {
             HttpResponseMessage response =
@@ -195,7 +260,12 @@ namespace WpfClient
 
             response.EnsureSuccessStatusCode();
         }
-
+        /// <summary>
+        /// Sync delete request
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="endpoint"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void Delete(int id, string endpoint)
         {
             HttpResponseMessage response =
@@ -209,7 +279,14 @@ namespace WpfClient
 
             response.EnsureSuccessStatusCode();
         }
-
+        /// <summary>
+        /// Async put request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async System.Threading.Tasks.Task PutAsync<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
@@ -223,7 +300,13 @@ namespace WpfClient
 
             response.EnsureSuccessStatusCode();
         }
-
+        /// <summary>
+        /// Sync put request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="endpoint"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void Put<T>(T item, string endpoint)
         {
             HttpResponseMessage response =
@@ -247,6 +330,9 @@ namespace WpfClient
         }
         public string Msg { get; set; }
     }
+    /// <summary>
+    /// SignalR notify service
+    /// </summary>
     class NotifyService
     {
         private HubConnection conn;
